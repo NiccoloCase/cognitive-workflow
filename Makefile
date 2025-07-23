@@ -1,8 +1,4 @@
-.PHONY: build run e2e_test integration_test dev clean
-
-# Build application
-build:
-	docker-compose build
+.PHONY: run e2e_test integration_test dev clean
 
 # Run application
 run:

@@ -12,27 +12,25 @@ A reflective, self-aware multi-agent AI system that implements dynamic workflow 
 
 ### Prerequisites
 
-- Java 17+
-- Maven 3.6+
 - MongoDB Atlas account
 - OpenAI API key
 - Anthropic API key (optional)
+- Docker
+- Make
 
 ### Environment Setup
 
-Create a `.env` file or set the following environment variables:
+Clone `.env.template` and edit with your variables:
 
 ```bash
-# Required: OpenAI API Configuration
-OPENAI_API_KEY=your_openai_api_key_here
+cp .env.template .env
+```
 
-# Optional: Anthropic API Configuration  
-ANTHROPIC_API_KEY=your_anthropic_api_key_here
-
-# Required: MongoDB Configuration
-MONGO_URI=your_mongodb_connection_string
-MONGO_TEST_URI=your_test_mongodb_connection_string
-MONGO_VECTOR_SEARCH_DEMO_URI=your_vector_search_mongodb_connection_string
+#### Custom api port
+The default api port is 3001, in order to set a custom port add this line to your `.env` file
+```bash
+# Optional: Spring port (default 3001)
+APP_PORT=port_number
 ```
 
 ### MongoDB Atlas Setup
@@ -189,10 +187,16 @@ git clone https://github.com/NiccoloCase/cognitive-workflow.git
 cd cognitive-workflow
 
 # Install dependencies and run
-mvn spring-boot:run
+make run
 ```
 
 The application will start on `http://localhost:3001`
+
+### Clean the container
+To remove a container in order to restart with a fresh new enviroment, exectute the following make script
+```bash
+make clean
+```
 
 ## 🏗️ Architecture Overview
 
@@ -238,7 +242,39 @@ The project includes comprehensive test coverage:
 - **54 Integration Tests**: LLM integration, schema conversion, database operations  
 - **2 End-to-End Tests**: Complete workflow execution scenarios
 
+## 🧪 Testing with Makefile
 
+The `Makefile` provides commands to simplify testing tasks. Below are the available testing commands and their usage:
+
+### Run Unit Tests
+```bash
+make unit_test
+```
+Runs the unit tests inside the `dev` container.
+
+### Run End-to-End Tests
+```bash
+make e2e_test
+```
+Runs the end-to-end tests inside the `dev` container.
+
+### Run Integration Tests
+```bash
+make integration_test
+```
+Runs the integration tests inside the `dev` container.
+
+### Run Focused Tests
+```bash
+make focus_test
+```
+Runs tests with the `focus` tag, including both unit and integration tests.
+
+### Run All Tests
+```bash
+make all_tests
+```
+Runs all tests: unit, integration, and end-to-end tests.
 
 ## 🤝 Contributing
 

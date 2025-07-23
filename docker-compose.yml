@@ -4,45 +4,30 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile
-    container_name: cognitive-workflow-app
+    container_name: sallma
     ports:
-      - "${SERVER_PORT:-8080}:8080"
+      - "${APP_PORT:-3001}:3001"
     env_file:
       - .env
     profiles:
       - app
     
-  # Development/Test runner service
+  # Test runner service
   dev:
     build: 
       context: .
       dockerfile: Dockerfile
-    container_name: cognitive-workflow-dev
+    container_name: sallma-dev
     volumes:
       - .:/app
       - maven_cache:/root/.m2
     env_file:
       - .env
     working_dir: /app
-    command: tail -f /dev/null  # Keep container running
+    command: tail -f /dev/null
     profiles:
       - dev
-    
-  # E2E test runner
-  e2e-test:
-    build: 
-      context: .
-      dockerfile: Dockerfile
-    container_name: cognitive-workflow-e2e
-    volumes:
-      - .:/app
-      - maven_cache:/root/.m2
-    env_file:
-      - .env
-    working_dir: /app
-    command: mvn test -Dgroups=e2e
-    profiles:
-      - e2e
+
 
 volumes:
   maven_cache:
