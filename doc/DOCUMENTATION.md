@@ -123,12 +123,22 @@ The Workflow Executor implements a DAG-based execution engine that handles compl
 **Key Capabilities**:
 
 - **Dependency Resolution**: Uses topological sorting to determine the correct execution order
-- **Parallel Execution**: Identifies and executes independent nodes concurrently
+- **Sequential Execution**: Currently executes nodes one at a time in topological order
 - **Error Handling**: Provides robust error recovery and rollback mechanisms
 - **Resource Management**: Efficiently manages computational resources during execution
 
 **Execution Strategy**:
 The executor follows a dependency-first approach, ensuring that all prerequisites are satisfied before executing each node. This prevents deadlocks and ensures data consistency across the workflow.
+
+**Current Execution Model**:
+
+- **Sequential Execution**: Nodes are executed one at a time in topological order
+- **No Concurrency**: Concurrent execution is not yet supported
+- **Dependency Resolution**: Uses topological sorting to determine execution order
+- **Single-threaded**: All node execution occurs in a single execution thread
+
+**Future Concurrency Support**:
+The framework is designed to support concurrent execution in future versions, but currently prioritizes simplicity and reliability through sequential execution.
 
 ### Node Instance Management
 
@@ -170,6 +180,24 @@ The context supports various data access patterns:
 - Complex nested paths with mixed structures
 
 This flexibility enables complex data transformations and routing within workflows while maintaining data integrity.
+
+### Gateway Node Limitations
+
+**Current Gateway Support**:
+The framework currently supports only transparent gateway nodes, which provide minimal functionality:
+
+- **Transparent Operation**: Output ports are a mirror of input ports
+- **No Transformation**: Data passes through without any modification
+- **No Conditional Logic**: No routing or decision-making capabilities
+- **Simple Pass-through**: Input data is directly copied to output
+
+**Future Gateway Types**:
+The framework is designed to support more sophisticated gateway types in future versions:
+
+- **Conditional Gateways**: Route data based on conditions
+- **Decision Gateways**: Implement complex decision logic
+- **Split/Merge Gateways**: Handle parallel execution paths
+- **Error Handling Gateways**: Manage error conditions and recovery
 
 ## Data Models & Persistence
 
@@ -503,14 +531,23 @@ Each node type has specialized behavior:
 
 ### Execution Context Implementation
 
-The Execution Context is a specialized data structure that maintains state during workflow execution. It provides enhanced data access capabilities using dot notation for nested structures.
+The Execution Context is a specialized data structure that maintains state during workflow execution. It provides enhanced data access capabilities using dot notation for both nested objects and arrays.
 
 **Key Features**:
 
 - **Dot Notation Support**: Enables access to nested data structures using path notation
+- **Object and Array Support**: Supports both object properties and array indices in dot notation
 - **Dynamic Structure Creation**: Automatically creates intermediate structures as needed
 - **Deep Copy Capabilities**: Ensures data isolation between different execution phases
 - **Type Safety**: Maintains data type consistency throughout execution
+
+**Dot Notation Examples**:
+The execution context supports complex dot notation patterns for accessing nested data:
+
+- **Object Properties**: `car.wheels.frontLeft.pressure` - Access nested object properties
+- **Array Indices**: `car.wheels.1.pressure` - Access array elements using numeric indices
+- **Mixed Access**: `car.wheels.1.sensors.0.temperature` - Combine object properties and array indices
+- **Nested Arrays**: `users.0.addresses.1.city` - Access deeply nested array elements
 
 **Data Access Patterns**:
 The context supports various data access patterns:
@@ -522,6 +559,15 @@ The context supports various data access patterns:
 
 This flexibility enables complex data transformations and routing within workflows while maintaining data integrity.
 
+**Unit Testing Requirements**:
+Comprehensive unit testing of the Execution Context is vital for system reliability. Multiple complex unit tests should be added for any new functionality:
+
+- **Dot Notation Testing**: Test all dot notation patterns (objects, arrays, mixed)
+- **Edge Case Testing**: Test boundary conditions and error scenarios
+- **Performance Testing**: Ensure acceptable performance for complex operations
+- **Concurrency Testing**: Verify thread safety for concurrent access
+- **Memory Testing**: Validate memory usage and cleanup for large structures
+
 ### Dependency Resolution Algorithm
 
 The workflow executor implements topological sorting for dependency resolution to ensure proper execution order.
@@ -532,10 +578,20 @@ The workflow executor implements topological sorting for dependency resolution t
 2. **In-Degree Calculation**: Determine dependencies for each node
 3. **Topological Sorting**: Use Kahn's algorithm to determine execution order
 4. **Cycle Detection**: Identify and handle circular dependencies
-5. **Parallel Execution**: Identify nodes that can execute concurrently
+5. **Sequential Execution**: Execute nodes one at a time in topological order
 
 **Execution Strategy**:
 The executor follows a dependency-first approach, ensuring that all prerequisites are satisfied before executing each node. This prevents deadlocks and ensures data consistency across the workflow.
+
+**Current Execution Model**:
+
+- **Sequential Execution**: Nodes are executed one at a time in topological order
+- **No Concurrency**: Concurrent execution is not yet supported
+- **Dependency Resolution**: Uses topological sorting to determine execution order
+- **Single-threaded**: All node execution occurs in a single execution thread
+
+**Future Concurrency Support**:
+The framework is designed to support concurrent execution in future versions, but currently prioritizes simplicity and reliability through sequential execution.
 
 ## AI Services Integration
 
