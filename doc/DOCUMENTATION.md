@@ -26,7 +26,7 @@
 - Meta-model changes propagate as events via MOP
 - **Hot-Swapping**: For non-breaking updates, if the instance is not currently running, the system may swap the meta-model in place, seamlessly refreshing the instance
 - **Re-instantiation**: In cases where the instance is currently active or the update constitutes a breaking change (e.g., altered node dependencies in a workflow), the affected meta-model is marked as deprecated. Any future execution of such instances requires a complete re-creation, even if it was previously persisted in the registry
-- Semantic versioning ensures compatibility
+- Semantic versioning ensures compatibility (MAJOR.MINOR.PATCH)
 
 ---
 
@@ -103,6 +103,14 @@
 - **WorkflowMetamodel**: Complete workflow definitions
 - **NodeMetamodel**: Reusable node components with ports
 - **IntentMetamodel**: User intent patterns for workflow selection
+
+### Semantic Versioning
+
+- **MAJOR**: Breaking changes
+- **MINOR**: New features
+- **PATCH**: Bug fixes
+
+Each meta-model type (WorkflowMetamodel, NodeMetamodel, IntentMetamodel) maintains an independent semantic versioning scheme (MAJOR.MINOR.PATCH). For NodeMetamodels, non-breaking changes (minor or patch updates) result in the existing MongoDB document being updated in place, preserving the same document `_id`. In contrast, breaking changes (major version increments) are stored as entirely new documents, each with a unique `_id`. Every NodeMetamodel document also includes a `familyId` field, which groups all versions belonging to the same logical node lineage. Thus, `_id` uniquely identifies a specific version of a node, while `familyId` links all versions of that node family for version tracking and compatibility management. Workflows are DAGs of nodes, each referenced with their ID (not familyID).
 
 ### Vector Search
 
