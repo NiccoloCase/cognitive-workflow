@@ -24,7 +24,8 @@
 ### Runtime Adaptations
 
 - Meta-model changes propagate as events via MOP
-- Hot-swapping for non-breaking changes, re-instantiation for breaking changes
+- **Hot-Swapping**: For non-breaking updates, if the instance is not currently running, the system may swap the meta-model in place, seamlessly refreshing the instance
+- **Re-instantiation**: In cases where the instance is currently active or the update constitutes a breaking change (e.g., altered node dependencies in a workflow), the affected meta-model is marked as deprecated. Any future execution of such instances requires a complete re-creation, even if it was previously persisted in the registry
 - Semantic versioning ensures compatibility
 
 ---
@@ -48,9 +49,26 @@
 
 #### Validator Services
 
-- **NodeMetamodelValidator**: Validate individual node meta-models
-- **WorkflowMetamodelValidator**: Validate complete workflow structures
+- **NodeMetamodelValidator**:
+  - Basic properties (name, description, author, version, type)
+  - Port validation (keys, schemas, default values, duplicates)
+  - Node-specific validation (REST URI, LLM model/provider, tool configuration)
+  - Schema compatibility and type checking
+- **WorkflowMetamodelValidator**:
+  - DAG structure verification (no cycles)
+  - Node reference validity and existence
+  - Port compatibility between connected nodes
+  - Entry/exit point validation
+  - Edge condition validation
+  - Required input satisfaction
 - **IntentMetamodelValidator**: Validate intent definitions (to be implemented)
+
+**⚠️ CRITICAL WARNING**: Any significant modification to meta-models (NodeMetamodel, WorkflowMetamodel, IntentMetamodel) MUST include:
+
+1. **Validation Logic**: Add appropriate validation rules in the corresponding validator classes
+2. **Unit Testing**: Create comprehensive unit tests for the new validation logic
+3. **Error/Warning Classification**: Determine whether validation issues are errors or warnings
+4. **Integration**: Ensure validation is called during meta-model creation/updates
 
 ### Operational Layer Components
 
@@ -60,17 +78,21 @@
 - Manages execution phases: intent detection → workflow selection → input mapping → execution → result extraction
 - Handles observability and error management
 
-#### Node Instance Management
+#### Instance Management
 
 - **NodeFactory**: Creates appropriate node instances from meta-models
-- **NodeInstanceManager**: Manages node lifecycle and execution
-- **WorkflowInstanceManager**: Manages workflow instances and state
+
+- **WorkflowFactory**: Creates appropriate workflow instances from meta-models
+
+- **NodeInstanceManager**: Manages node lifecycle and execution. It is responsible for getting a new instance of a node from a node meta-model by using the NodeFactory or by reusing an existing instance saved in a registry.
+
+- **WorkflowInstanceManager**: Manages workflow instances. It is responsible for getting a new instance of a workflow from a workflow meta-model by using the WorkflowFactory or by reusing an existing instance saved in a registry.
 
 #### Routing and Execution
 
 - **RoutingManager**: Handles workflow selection based on intent
 - **WorkflowExecutor**: Executes workflows in topological order
-- **ExecutionContext**: Specialized HashMap supporting dot notation for nested access
+- **ExecutionContext**: Specialized HashMap supporting dot notation for nested access (example: `car.wheels.1.pressure`, `users.0.addresses.1.city`). For now the execution context is a single global instance for the entire workflow execution. It is used to store the input and output data of the workflow's nodes.
 
 ---
 
@@ -97,7 +119,7 @@
 - Specialized HashMap supporting dot notation for nested access
 - Examples: `car.wheels.1.pressure`, `users.0.addresses.1.city`
 - Deep copy capabilities for data isolation
-- **Critical**: Requires comprehensive unit testing for all new functionality
+- **Critical**: Requires comprehensive unit testing for all new functionality! Any modification to the execution context must be reflected in the InputMapper and PortAdapter services.
 
 ### Current Execution Model
 
@@ -107,10 +129,18 @@
 
 ### Node Types
 
+#### AI Nodes
+
 - **LLM Nodes**: Language model interactions with token tracking
 - **Embedding Nodes**: Vector representation generation
 - **Vector Database Nodes**: Similarity search and storage
+
+#### Tool Nodes
+
 - **REST Nodes**: External API integration
+
+#### Flow Nodes
+
 - **Gateway Nodes**: Currently only transparent (pass-through) - no conditional logic
 
 ### Execution Phases
@@ -203,16 +233,6 @@
 
 ### Testing Requirements
 
-- **Unit Tests**: 90% line coverage minimum for validator classes
-- **Integration Tests**: Component interactions and service integration
-- **E2E Tests**: Complete workflow execution and API interactions
-- **Validation Tests**: Comprehensive testing of all validation rules and error/warning classification
-- **Mock External Services**: Use WireMock for reliable testing
-
-### Adding New Meta-model Types
-
-1. Create/extend appropriate validator classes
-2. Define validation rules and error/warning classification
-3. Integrate into validation pipeline
-4. Create comprehensive unit tests
-5. Update documentation
+- **Unit Tests**: Fast tests for basic functionality. Mocking external services is required. No database access is allowed. No LLM calls are allowed.
+- **Integration Tests**: Component interactions and service integration. Mocking of database is required. Real LLM calls are instead suggested in order to prevent regression of the AI services.
+- **E2E Tests**: Complete workflow execution and API interactions. No mocking is allowed.
