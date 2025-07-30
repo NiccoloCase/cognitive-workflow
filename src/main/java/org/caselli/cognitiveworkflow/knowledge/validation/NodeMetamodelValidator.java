@@ -17,6 +17,7 @@ import java.util.*;
  * - Ports validity
  * - Default values for ports
  * - serviceUri for REST nodes
+ * @author niccolocaselli
  */
 @Service
 public class NodeMetamodelValidator {

@@ -12,6 +12,10 @@ import org.springframework.web.reactive.resource.NoResourceFoundException;
 
 import java.time.Instant;
 
+/**
+ * Global exception handler for the application.
+ * @author niccolocaselli
+ */
 @ControllerAdvice
 public class GlobalExceptionHandler {
 

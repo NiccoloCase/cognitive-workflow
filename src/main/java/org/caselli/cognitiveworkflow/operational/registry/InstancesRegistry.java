@@ -5,7 +5,10 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
-
+/**
+ * Abstract base class for managing instances in the operational layer.
+ * @author niccolocaselli
+ */
 public abstract class InstancesRegistry<T> {
     protected final Map<String, T> runningInstances = new ConcurrentHashMap<>();
 

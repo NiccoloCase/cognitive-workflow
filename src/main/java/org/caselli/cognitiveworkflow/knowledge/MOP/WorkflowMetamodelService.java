@@ -19,6 +19,10 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.*;
 
+/**
+ * Service for managing workflow metamodels in the knowledge layer.
+ * @author niccolocaselli
+ */
 @Service
 public class WorkflowMetamodelService implements ApplicationListener<ApplicationReadyEvent> {
 

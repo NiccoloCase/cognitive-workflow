@@ -23,6 +23,7 @@ import java.util.Map;
 /**
  * A utility class for handling structured output from LLM responses based on port schemas.
  * This class simplifies working with Spring AI's output converters for different port types.
+ * @author niccolocaselli
  */
 public class PortStructuredOutputConverter {
 

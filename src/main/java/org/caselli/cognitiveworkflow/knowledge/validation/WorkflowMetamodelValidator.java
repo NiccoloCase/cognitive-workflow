@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
  * - DAG structure verification
  * - Node reference validity
  * - Port compatibility between connected nodes
+ * @author niccolocaselli
  */
 @Service
 public class WorkflowMetamodelValidator {

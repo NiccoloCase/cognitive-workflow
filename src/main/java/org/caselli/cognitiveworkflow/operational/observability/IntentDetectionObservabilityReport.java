@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * Intent detection observability trace
+ * @author niccolocaselli
  */
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)

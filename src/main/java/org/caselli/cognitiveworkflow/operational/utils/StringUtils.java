@@ -2,6 +2,7 @@ package org.caselli.cognitiveworkflow.operational.utils;
 
 /**
  * A utility class for string operations.
+ * @author niccolocaselli
  */
 public class StringUtils {
 

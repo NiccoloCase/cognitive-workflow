@@ -7,6 +7,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Configuration class for caching settings.
+ * @author niccolocaselli
+ */
 @Configuration
 public class CacheConfig {
 

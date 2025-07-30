@@ -13,6 +13,7 @@ import java.time.Duration;
 
 /**
  * Abstract base class for Observability Tracing
+ * @author niccolocaselli
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data

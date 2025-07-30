@@ -16,6 +16,10 @@ import javax.validation.Valid;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+/**
+ * REST controller for managing node operations.
+ * @author niccolocaselli
+ */
 @Validated
 @RestController
 @RequestMapping("/api/nodes")

@@ -29,6 +29,7 @@ import java.util.stream.Collectors;
 
 /**
  * Intent Detector Service
+ * @author niccolocaselli
  */
 @Service
 public class IntentDetectionService extends LLMAbstractService {

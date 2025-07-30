@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * REST controller for managing intent operations.
+ * @author niccolocaselli
+ */
 @Validated
 @RestController
 @RequestMapping("/api/intents")

@@ -24,6 +24,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Service for managing node metamodels in the knowledge layer.
+ * @author niccolocaselli
+ */
 @Service
 public class NodeMetamodelService implements ApplicationListener<ApplicationReadyEvent>  {
     private final Logger logger = LoggerFactory.getLogger(NodeMetamodelService.class);

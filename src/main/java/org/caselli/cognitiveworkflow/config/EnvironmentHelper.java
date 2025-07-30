@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * Helper component for checking the application environment
+ * @author niccolocaselli
  */
 @Component
 public class EnvironmentHelper {

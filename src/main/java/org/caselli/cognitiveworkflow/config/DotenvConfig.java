@@ -6,6 +6,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.MapPropertySource;
 import org.springframework.core.env.PropertySource;
 
+/**
+ * Configuration class for dotenv file loading.
+ * @author niccolocaselli
+ */
 @Configuration
 public class DotenvConfig {
 

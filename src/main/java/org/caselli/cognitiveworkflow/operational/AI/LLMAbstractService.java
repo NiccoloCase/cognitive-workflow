@@ -9,6 +9,7 @@ import org.springframework.ai.chat.client.ChatClient;
  * Provides lazy initialization and logger support.
  * Subclasses must implement {@link #buildChatClient()} to provide a specific ChatClient
  * configuration.
+ * @author niccolocaselli
  */
 public abstract class LLMAbstractService {
     protected final Logger logger = LoggerFactory.getLogger(getClass());

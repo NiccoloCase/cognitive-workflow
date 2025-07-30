@@ -5,6 +5,7 @@ import lombok.Data;
 /**
  * Helper class to return a result and the observability trace for a process
  * @param <T> The result class
+ * @author niccolocaselli
  */
 @Data
 public class ResultWithObservability<T> {

@@ -13,10 +13,10 @@ import java.util.Collections;
 import java.util.List;
 import org.bson.Document;
 
-
 /**
  * Service responsible for searching for the most similar IntentMetamodel
  * based on user input embedding using MongoDB Atlas Vector Search.
+ * @author niccolocaselli
  */
 @Service
 public class IntentSearchService {

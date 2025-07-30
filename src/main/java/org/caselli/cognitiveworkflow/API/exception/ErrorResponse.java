@@ -4,6 +4,10 @@ import lombok.Data;
 
 import java.time.Instant;
 
+/**
+ * Error response model for API exceptions.
+ * @author niccolocaselli
+ */
 @Data
 public class ErrorResponse {
     private String code;

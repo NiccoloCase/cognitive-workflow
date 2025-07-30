@@ -7,6 +7,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * Utility class for temperature-based sampling from list of candidates.
  * Higher-ranked (higher-scored) candidates are more likely to be selected,
  * with temperature controlling the randomness of the selection.
+ * @author niccolocaselli
  */
 public final class TemperatureSampler {
     private TemperatureSampler() {}

@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 /**
  * Service responsible for hybrid search of Nodes using MongoDB Atlas Vector Search and Full-Text Search.
  * Implements Reciprocal Rank Fusion (RRF) pattern for combining results.
+ * @author niccolocaselli
  */
 @Service
 public class NodeHybridSearchService {

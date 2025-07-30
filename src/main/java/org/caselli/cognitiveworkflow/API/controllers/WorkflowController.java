@@ -16,6 +16,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+/**
+ * REST controller for managing workflow operations.
+ * @author niccolocaselli
+ */
 @Validated
 @RestController
 @RequestMapping("/api/workflows")

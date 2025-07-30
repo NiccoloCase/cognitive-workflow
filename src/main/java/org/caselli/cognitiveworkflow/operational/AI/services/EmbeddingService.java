@@ -12,6 +12,7 @@ import org.springframework.ai.embedding.EmbeddingModel;
 
 /**
  * Service responsible for generating embedding vectors.
+ * @author niccolocaselli
  */
 @Service
 public class EmbeddingService {

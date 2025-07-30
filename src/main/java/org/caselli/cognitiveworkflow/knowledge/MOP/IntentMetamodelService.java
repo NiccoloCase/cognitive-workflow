@@ -12,7 +12,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-
+/**
+ * Service for managing intent metamodels in the knowledge layer.
+ * @author niccolocaselli
+ */
 @Service
 public class IntentMetamodelService {
 

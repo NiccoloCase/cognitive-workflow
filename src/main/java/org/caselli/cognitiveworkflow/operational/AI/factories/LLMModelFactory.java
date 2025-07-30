@@ -14,7 +14,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import java.util.logging.Logger;
 
-
+/**
+ * Factory for creating LLM models and chat clients.
+ * @author niccolocaselli
+ */
 @Component
 public class LLMModelFactory {
 

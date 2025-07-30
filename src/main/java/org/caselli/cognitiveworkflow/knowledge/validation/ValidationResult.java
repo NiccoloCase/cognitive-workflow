@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * Helper class for storing validation results
+ * @author niccolocaselli
  */
 public class ValidationResult {
     private final List<ValidationError> errors = new ArrayList<>();

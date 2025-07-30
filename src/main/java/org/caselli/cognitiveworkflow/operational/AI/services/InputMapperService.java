@@ -26,11 +26,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-
 /**
  * LLM-based service for mapping input variables to workflow nodes.
  * This service analyzes unstructured variables and determines the most suitable starting node
  * in a workflow, mapping the variables to the node input structure.
+ * @author niccolocaselli
  */
 @Service
 public class InputMapperService extends LLMAbstractService {
